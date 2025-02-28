@@ -1,0 +1,33 @@
+name: 28-02-2025 reusable workflows demo
+on: 
+  push:
+    branches: [main]
+jobs: 
+  job-from-current-workflow:
+    runs-on: ubuntu-latest
+    steps:
+      - name: display message
+        run: echo 'job from current workflow'
+      - name: checkout repository
+        uses: actions/checkout@v4.2.2
+      - name: create a sample file
+        run: echo "Hello, artifact" > sample.txt
+      - name: upload artifact
+        uses: actions/upload-artifact@v4.6.1 
+        with: 
+          name: sample-text-file
+          path: sample.txt
+  download-artifact:
+    runs-on: ubuntu-latest
+    needs: job-from-current-workflow
+    steps: 
+      - name: Download-artifact
+        uses: actions/download-artifact@v4.1.9
+        with: 
+          name: sample-text-file
+      - name: list the files in the current directory
+        run: ls -l
+  job-from-different-workflow:
+    uses:  arslakin/maven-register-app/.github/workflows/eventsworkflow.yml@main 
+  # workflow-from-different-repository:
+  # uses: arslakin/register-app-maven/.github/workflows/firstaction.yml@main
