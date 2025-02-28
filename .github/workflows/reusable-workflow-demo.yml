@@ -28,6 +28,6 @@ jobs:
       - name: list the files in the current directory
         run: ls -l
   job-from-different-workflow:
-    uses:  arslakin/maven-register-app/.github/workflows/eventsworkflow.yml@main 
+    uses:  arslakin/maven-register-app/.github/workflows/main.yml@main 
   # workflow-from-different-repository:
   # uses: arslakin/register-app-maven/.github/workflows/firstaction.yml@main
